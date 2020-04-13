@@ -87,9 +87,9 @@ func main() {
 	busy := gpioreg.ByName("17")
 
 	dev, err := inky.New(b, dc, reset, busy, &inky.Opts{
-		Model:       inky.PHAT,
-		ModelColor:  inky.Red,
-		BorderColor: inky.Black,
+		Model:       inky.WHAT,
+		ModelColor:  inky.Black,
+		BorderColor: inky.White,
 	})
 	if err != nil {
 		log.Fatalf("inky new: %+v", err)

@@ -1,2 +1,4 @@
 periph.io/x/periph v3.6.2+incompatible h1:B9vqhYVuhKtr6bXua8N9GeBEvD7yanczCvE0wU2LEqw=
 periph.io/x/periph v3.6.2+incompatible/go.mod h1:EWr+FCIU2dBWz5/wSWeiIUJTriYv9v2j2ENBmgYyy7Y=
+periph.io/x/periph v3.6.3-0.20200410165042-03ec8a96c847+incompatible h1:ZO9EbuW1SYswvdTqpbCFvm1Dld1ytsdIK6yVxWvFSYg=
+periph.io/x/periph v3.6.3-0.20200410165042-03ec8a96c847+incompatible/go.mod h1:EWr+FCIU2dBWz5/wSWeiIUJTriYv9v2j2ENBmgYyy7Y=
