@@ -1,3 +1,5 @@
+github.com/pbnjay/pixfont v0.0.0-20200125053448-dd9f796fdec0 h1:XO/7RN7i7752VuWejKOcE+G0iG6/zJtqSihMfnkjfGw=
+github.com/pbnjay/pixfont v0.0.0-20200125053448-dd9f796fdec0/go.mod h1:wG8B9TIIBxEYqwgBb9NEs/Gz5/ywV351SGZXRiVJJUA=
 periph.io/x/periph v3.6.2+incompatible h1:B9vqhYVuhKtr6bXua8N9GeBEvD7yanczCvE0wU2LEqw=
 periph.io/x/periph v3.6.2+incompatible/go.mod h1:EWr+FCIU2dBWz5/wSWeiIUJTriYv9v2j2ENBmgYyy7Y=
 periph.io/x/periph v3.6.3-0.20200410165042-03ec8a96c847+incompatible h1:ZO9EbuW1SYswvdTqpbCFvm1Dld1ytsdIK6yVxWvFSYg=

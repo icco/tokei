@@ -2,11 +2,11 @@ package main
 
 import (
 	"image"
-	"image/jpeg"
+	"image/color"
 	"log"
-	"os"
 	"strings"
 
+	"github.com/pbnjay/pixfont"
 	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
@@ -15,18 +15,6 @@ import (
 )
 
 func main() {
-	// Open and decode the image.
-	f, err := os.Open("./bzl.jpg")
-	if err != nil {
-		log.Fatalf("couldn't open file: %+v", err)
-	}
-	defer f.Close()
-
-	img, err := jpeg.Decode(f)
-	if err != nil {
-		log.Fatalf("couldn't decode file: %+v", err)
-	}
-
 	state, err := host.Init()
 	if err != nil {
 		log.Fatal(err)
@@ -94,6 +82,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("inky new: %+v", err)
 	}
+
+	img := image.NewRGBA(dev.Bounds())
+	pixfont.DrawString(img, 100, 100, "HELLO", color.Black)
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
 		log.Fatalf("draw: %+v", err)
