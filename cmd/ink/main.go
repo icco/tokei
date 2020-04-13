@@ -2,9 +2,9 @@ package main
 
 import (
 	"image"
-	"image/color"
+	"image/jpeg"
 	"log"
-	"math"
+	"os"
 	"strings"
 
 	"periph.io/x/periph/conn/gpio/gpioreg"
@@ -15,6 +15,17 @@ import (
 )
 
 func main() {
+	// Open and decode the image.
+	f, err := os.Open("./bzl.jpg")
+	if err != nil {
+		log.Fatalf("couldn't open file: %+v", err)
+	}
+	defer f.Close()
+
+	img, err := jpeg.Decode(f)
+	if err != nil {
+		log.Fatalf("couldn't decode file: %+v", err)
+	}
 
 	state, err := host.Init()
 	if err != nil {
@@ -82,23 +93,6 @@ func main() {
 	})
 	if err != nil {
 		log.Fatalf("inky new: %+v", err)
-	}
-
-	width := dev.Bounds().Dx()
-	height := dev.Bounds().Dy()
-
-	img := image.NewGray(dev.Bounds())
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
-			dist := math.Sqrt(math.Pow(float64(x-width/2), 2)/3+math.Pow(float64(y-height/2), 2)) / (float64(height) / 1.5) * 255
-			var gray uint8
-			if dist > 255 {
-				gray = 255
-			} else {
-				gray = uint8(dist)
-			}
-			img.SetGray(x, y, color.Gray{Y: 255 - gray})
-		}
 	}
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
