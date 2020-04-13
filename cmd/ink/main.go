@@ -6,7 +6,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/pbnjay/pixfont"
+	"golang.org/x/image/font"
+	"golang.org/x/image/font/inconsolata"
+	"golang.org/x/image/math/fixed"
 	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
@@ -84,9 +86,21 @@ func main() {
 	}
 
 	img := image.NewRGBA(dev.Bounds())
-	pixfont.DrawString(img, 100, 100, "HELLO", color.Black)
+	addLabel(img, 100, 100, "HELLO")
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
 		log.Fatalf("draw: %+v", err)
 	}
+}
+
+func addLabel(img *image.RGBA, x, y int, label string) {
+	point := fixed.Point26_6{fixed.Int26_6(x * 64), fixed.Int26_6(y * 64)}
+
+	d := &font.Drawer{
+		Dst:  img,
+		Src:  image.NewUniform(color.White),
+		Face: inconsolata.Bold8x16,
+		Dot:  point,
+	}
+	d.DrawString(label)
 }
