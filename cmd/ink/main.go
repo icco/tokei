@@ -1,22 +1,19 @@
 package main
 
 import (
-	"log"
-	"os"
-		"fmt"
 	"image"
 	"image/color"
-	"image/draw"
+	"log"
 	"math"
 
-  	"periph.io/x/periph/conn/gpio/gpioreg"
+	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi/spireg"
 	"periph.io/x/periph/experimental/devices/inky"
 	"periph.io/x/periph/host"
 )
 
 func main() {
-		const width = 130
+	const width = 130
 	const height = 50
 
 	img := image.NewGray(image.Rectangle{Max: image.Point{X: width, Y: height}})
@@ -33,8 +30,28 @@ func main() {
 		}
 	}
 
-	if _, err := host.Init(); err != nil {
+	state, err := host.Init()
+	if err != nil {
 		log.Fatal(err)
+	}
+
+	// Prints the loaded driver.
+	log.Printf("Using drivers:\n")
+	for _, driver := range state.Loaded {
+		log.Printf("- %s\n", driver)
+	}
+
+	// Prints the driver that were skipped as irrelevant on the platform.
+	log.Printf("Drivers skipped:\n")
+	for _, failure := range state.Skipped {
+		log.Printf("- %s: %s\n", failure.D, failure.Err)
+	}
+
+	// Having drivers failing to load may not require process termination. It
+	// is possible to continue to run in partial failure mode.
+	log.Printf("Drivers failed to load:\n")
+	for _, failure := range state.Failed {
+		log.Printf("- %s: %v\n", failure.D, failure.Err)
 	}
 
 	b, err := spireg.Open("SPI0.0")
