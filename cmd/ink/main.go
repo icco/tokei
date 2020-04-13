@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"log"
 	"strings"
+	"time"
 
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/inconsolata"
@@ -86,7 +87,7 @@ func main() {
 	}
 
 	img := image.NewRGBA(dev.Bounds())
-	addLabel(img, 100, 100, "HELLO")
+	addLabel(img, 100, 100, time.Now().Format("15:04\n2006-01-02\nMonday"))
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
 		log.Fatalf("draw: %+v", err)
