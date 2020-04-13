@@ -5,30 +5,16 @@ import (
 	"image/color"
 	"log"
 	"math"
+	"strings"
 
 	"periph.io/x/periph/conn/gpio/gpioreg"
+	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
 	"periph.io/x/periph/experimental/devices/inky"
 	"periph.io/x/periph/host"
 )
 
 func main() {
-	const width = 130
-	const height = 50
-
-	img := image.NewGray(image.Rectangle{Max: image.Point{X: width, Y: height}})
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
-			dist := math.Sqrt(math.Pow(float64(x-width/2), 2)/3+math.Pow(float64(y-height/2), 2)) / (height / 1.5) * 255
-			var gray uint8
-			if dist > 255 {
-				gray = 255
-			} else {
-				gray = uint8(dist)
-			}
-			img.SetGray(x, y, color.Gray{Y: 255 - gray})
-		}
-	}
 
 	state, err := host.Init()
 	if err != nil {
@@ -54,6 +40,32 @@ func main() {
 		log.Printf("- %s: %v\n", failure.D, failure.Err)
 	}
 
+	// Enumerate all SPI ports available and the corresponding pins.
+	log.Print("SPI ports available:\n")
+	for _, ref := range spireg.All() {
+		log.Printf("- %s\n", ref.Name)
+		if ref.Number != -1 {
+			log.Printf("  %d\n", ref.Number)
+		}
+		if len(ref.Aliases) != 0 {
+			log.Printf("  %s\n", strings.Join(ref.Aliases, " "))
+		}
+
+		p, err := ref.Open()
+		if err != nil {
+			log.Printf("  Failed to open: %v", err)
+		}
+		if p, ok := p.(spi.Pins); ok {
+			log.Printf("  CLK : %s", p.CLK())
+			log.Printf("  MOSI: %s", p.MOSI())
+			log.Printf("  MISO: %s", p.MISO())
+			log.Printf("  CS  : %s", p.CS())
+		}
+		if err := p.Close(); err != nil {
+			log.Printf("  Failed to close: %v", err)
+		}
+	}
+
 	b, err := spireg.Open("SPI0.0")
 	if err != nil {
 		log.Fatal(err)
@@ -69,10 +81,27 @@ func main() {
 		BorderColor: inky.Black,
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("inky new: %+v", err)
+	}
+
+	width := dev.Bounds().Dx()
+	height := dev.Bounds().Dy()
+
+	img := image.NewGray(dev.Bounds())
+	for x := 0; x < width; x++ {
+		for y := 0; y < height; y++ {
+			dist := math.Sqrt(math.Pow(float64(x-width/2), 2)/3+math.Pow(float64(y-height/2), 2)) / (float64(height) / 1.5) * 255
+			var gray uint8
+			if dist > 255 {
+				gray = 255
+			} else {
+				gray = uint8(dist)
+			}
+			img.SetGray(x, y, color.Gray{Y: 255 - gray})
+		}
 	}
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
-		log.Fatal(err)
+		log.Fatalf("draw: %+v", err)
 	}
 }
