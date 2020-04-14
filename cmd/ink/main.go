@@ -3,14 +3,11 @@ package main
 import (
 	"image"
 	"image/color"
-	"image/draw"
 	"log"
 	"strings"
 	"time"
 
-	"golang.org/x/image/font"
-	"golang.org/x/image/font/inconsolata"
-	"golang.org/x/image/math/fixed"
+	"github.com/fogleman/gg"
 	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
@@ -93,23 +90,39 @@ func main() {
 		log.Fatalf("inky new: %+v", err)
 	}
 
-	img := image.NewRGBA(dev.Bounds())
-	draw.Draw(img, img.Bounds(), &image.Uniform{White}, image.ZP, draw.Src)
-	addLabel(img, 100, 100, time.Now().Format("15:04\n2006-01-02\nMonday"))
+	img, err := generateImage(dev.Bounds())
+	if err != nil {
+		log.Fatalf("generate image: %+v", err)
+	}
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
 		log.Fatalf("draw: %+v", err)
 	}
 }
 
-func addLabel(img *image.RGBA, x, y int, label string) {
-	point := fixed.Point26_6{fixed.Int26_6(x * 64), fixed.Int26_6(y * 64)}
-
-	d := &font.Drawer{
-		Dst:  img,
-		Src:  image.NewUniform(Black),
-		Face: inconsolata.Bold8x16,
-		Dot:  point,
+func generateImage(r image.Rectangle) (image.Image, error) {
+	dc := gg.NewContextForRGBA(image.NewRGBA(r))
+	dc.SetRGB(1, 1, 1)
+	dc.Clear()
+	if err := dc.LoadFontFace("Impact.ttf", 96); err != nil {
+		return nil, err
 	}
-	d.DrawString(label)
+	dc.SetRGB(0, 0, 0)
+	s := time.Now().Format("15:04\n2006-01-02\nMonday")
+	n := 6 // "stroke" size
+	for dy := -n; dy <= n; dy++ {
+		for dx := -n; dx <= n; dx++ {
+			if dx*dx+dy*dy >= n*n {
+				// give it rounded corners
+				continue
+			}
+			x := float64(r.Dx()/2 + dx)
+			y := float64(r.Dy()/2 + dy)
+			dc.DrawStringAnchored(s, x, y, 0.5, 0.5)
+		}
+	}
+	dc.SetRGB(1, 1, 1)
+	dc.DrawStringAnchored(s, float64(r.Dx()/2), float64(r.Dy()/2), 0.5, 0.5)
+
+	return dc.Image(), nil
 }
