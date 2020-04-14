@@ -18,7 +18,7 @@ import (
 	"periph.io/x/periph/host"
 )
 
-const (
+var (
 	Red   = color.RGBA{R: 255}
 	White = color.White
 	Black = color.Black
@@ -86,7 +86,7 @@ func main() {
 
 	dev, err := inky.New(b, dc, reset, busy, &inky.Opts{
 		Model:       inky.WHAT,
-		ModelColor:  inky.Black,
+		ModelColor:  inky.Red,
 		BorderColor: inky.White,
 	})
 	if err != nil {
@@ -107,7 +107,7 @@ func addLabel(img *image.RGBA, x, y int, label string) {
 
 	d := &font.Drawer{
 		Dst:  img,
-		Src:  image.NewUniform(Red),
+		Src:  image.NewUniform(Black),
 		Face: inconsolata.Bold8x16,
 		Dot:  point,
 	}
