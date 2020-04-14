@@ -104,7 +104,7 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	dc := gg.NewContextForRGBA(image.NewRGBA(r))
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
-	if err := dc.LoadFontFace("Impact.ttf", 96); err != nil {
+	if err := dc.LoadFontFace("Inter-Regular.otf", 96); err != nil {
 		return nil, err
 	}
 	dc.SetRGB(0, 0, 0)
