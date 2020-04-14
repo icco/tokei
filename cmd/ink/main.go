@@ -5,9 +5,9 @@ import (
 	"image/color"
 	"log"
 	"strings"
-	"time"
 
 	"github.com/fogleman/gg"
+	"github.com/icco/tokei"
 	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
@@ -112,7 +112,7 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 
 	dc.SetRGB(0, 0, 0)
 	h := fontSize + 10
-	lines := strings.Split(time.Now().Format("15:04 Monday 2006-01-02"), " ")
+	lines := tokei.Lines()
 	for i, line := range lines {
 		y := float64(r.Dy()/2 - h*len(lines)/2 + i*h)
 		dc.DrawStringAnchored(line, float64(r.Dx()/2), y, 0.5, 0.5)
