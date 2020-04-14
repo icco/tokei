@@ -105,8 +105,8 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 
-	fontSize := 48
-	if err := dc.LoadFontFace("Roboto-Regular.ttf", float64(fontSize)); err != nil {
+	fontSize := 40
+	if err := dc.LoadFontFace("Roboto-Black.ttf", float64(fontSize)); err != nil {
 		return nil, err
 	}
 
