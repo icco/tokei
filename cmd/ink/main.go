@@ -18,6 +18,12 @@ import (
 	"periph.io/x/periph/host"
 )
 
+const (
+	Red   = color.RGBA{R: 255}
+	White = color.White
+	Black = color.Black
+)
+
 func main() {
 	state, err := host.Init()
 	if err != nil {
@@ -88,7 +94,7 @@ func main() {
 	}
 
 	img := image.NewRGBA(dev.Bounds())
-	draw.Draw(img, img.Bounds(), &image.Uniform{image.White}, image.ZP, draw.Src)
+	draw.Draw(img, img.Bounds(), &image.Uniform{White}, image.ZP, draw.Src)
 	addLabel(img, 100, 100, time.Now().Format("15:04\n2006-01-02\nMonday"))
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
@@ -101,7 +107,7 @@ func addLabel(img *image.RGBA, x, y int, label string) {
 
 	d := &font.Drawer{
 		Dst:  img,
-		Src:  image.NewUniform(color.White),
+		Src:  image.NewUniform(Red),
 		Face: inconsolata.Bold8x16,
 		Dot:  point,
 	}
