@@ -105,26 +105,17 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 
-	if err := dc.LoadFontFace("Roboto-Regular.ttf", 96); err != nil {
+	if err := dc.LoadFontFace("Roboto-Regular.ttf", 20); err != nil {
 		return nil, err
 	}
 
 	dc.SetRGB(0, 0, 0)
-	s := time.Now().Format("15:04\n2006-01-02\nMonday")
-	n := 6 // "stroke" size
-	for dy := -n; dy <= n; dy++ {
-		for dx := -n; dx <= n; dx++ {
-			if dx*dx+dy*dy >= n*n {
-				// give it rounded corners
-				continue
-			}
-			x := float64(r.Dx()/2 + dx)
-			y := float64(r.Dy()/2 + dy)
-			dc.DrawStringAnchored(s, x, y, 0.5, 0.5)
-		}
+	h := 30
+	lines := strings.Split(time.Now().Format("15:04 2006-01-02 Monday"), " ")
+	for i, line := range lines {
+		y := float64(r.Dy()/2 - h*len(lines)/2 + i*h)
+		dc.DrawStringAnchored(line, float64(r.Dx()/2), y, 0.5, 0.5)
 	}
-	dc.SetRGB(1, 1, 1)
-	dc.DrawStringAnchored(s, float64(r.Dx()/2), float64(r.Dy()/2), 0.5, 0.5)
 
 	return dc.Image(), nil
 }
