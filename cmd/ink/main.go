@@ -105,13 +105,14 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 
-	if err := dc.LoadFontFace("Roboto-Regular.ttf", 20); err != nil {
+	fontSize := 48
+	if err := dc.LoadFontFace("Roboto-Regular.ttf", float64(fontSize)); err != nil {
 		return nil, err
 	}
 
 	dc.SetRGB(0, 0, 0)
-	h := 30
-	lines := strings.Split(time.Now().Format("15:04 2006-01-02 Monday"), " ")
+	h := fontSize + 10
+	lines := strings.Split(time.Now().Format("15:04 Monday 2006-01-02"), " ")
 	for i, line := range lines {
 		y := float64(r.Dy()/2 - h*len(lines)/2 + i*h)
 		dc.DrawStringAnchored(line, float64(r.Dx()/2), y, 0.5, 0.5)
