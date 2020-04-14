@@ -5,11 +5,9 @@ import (
 	"image/color"
 	"log"
 	"strings"
-	"time"
 
 	"github.com/fogleman/gg"
 	"github.com/icco/tokei"
-	"github.com/robfig/cron/v3"
 	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
@@ -92,23 +90,14 @@ func main() {
 		log.Fatalf("inky new: %+v", err)
 	}
 
-	c := cron.New()
-	c.AddFunc("* * * * *", func() {
-		img, err := generateImage(dev.Bounds())
-		if err != nil {
-			log.Fatalf("generate image: %+v", err)
-		}
-
-		if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
-			log.Fatalf("draw: %+v", err)
-		}
-	})
-	c.Start()
-
-	for {
-		time.Sleep(time.Second)
+	img, err := generateImage(dev.Bounds())
+	if err != nil {
+		log.Fatalf("generate image: %+v", err)
 	}
 
+	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
+		log.Fatalf("draw: %+v", err)
+	}
 }
 
 func generateImage(r image.Rectangle) (image.Image, error) {
