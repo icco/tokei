@@ -3,6 +3,7 @@ package main
 import (
 	"image"
 	"image/color"
+	"image/draw"
 	"log"
 	"strings"
 	"time"
@@ -87,6 +88,7 @@ func main() {
 	}
 
 	img := image.NewRGBA(dev.Bounds())
+	draw.Draw(img, img.Bounds(), &image.Uniform{image.White}, image.ZP, draw.Src)
 	addLabel(img, 100, 100, time.Now().Format("15:04\n2006-01-02\nMonday"))
 
 	if err := dev.Draw(img.Bounds(), img, image.ZP); err != nil {
