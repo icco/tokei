@@ -3,11 +3,14 @@ package main
 import (
 	"image"
 	"image/color"
+	"io/ioutil"
 	"log"
 	"strings"
 	"time"
 
 	"github.com/fogleman/gg"
+	"golang.org/x/image/font/opentype"
+	"golang.org/x/image/font/sfnt"
 	"periph.io/x/periph/conn/gpio/gpioreg"
 	"periph.io/x/periph/conn/spi"
 	"periph.io/x/periph/conn/spi/spireg"
@@ -104,9 +107,21 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	dc := gg.NewContextForRGBA(image.NewRGBA(r))
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
-	if err := dc.LoadFontFace("Inter-Regular.otf", 96); err != nil {
+
+	fontBytes, err := ioutil.ReadFile("./Inter-Regular.otf")
+	if err != nil {
 		return nil, err
 	}
+	sf, err := sfnt.Parse(fontBytes)
+	if err != nil {
+		return nil, err
+	}
+	face, err := opentype.NewFace(sf, &opentype.FaceOptions{Size: 96})
+	if err != nil {
+		return nil, err
+	}
+
+	dc.SetFontFace(face)
 	dc.SetRGB(0, 0, 0)
 	s := time.Now().Format("15:04\n2006-01-02\nMonday")
 	n := 6 // "stroke" size
