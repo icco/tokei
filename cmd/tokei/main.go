@@ -24,14 +24,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	height := 6
-	width := 16
+	height := 7
+	width := 17
 	h := 0
 	w := 0
 	for {
+		log.Printf("x: %d, y: %d", w, h)
 		display.Clear()
-		display.SetBrightness(128)
-		display.SetPixel(w, h, 255)
+		display.SetPixel(w, h, 128)
 		display.Show()
 		time.Sleep(time.Second)
 		w = (w + 1) % width
