@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	scrollphathd "github.com/icco/scroll-phat-hd-go"
 	"github.com/icco/tokei/lib"
@@ -23,7 +24,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	display.SetBrightness(127)
-	display.Fill(0, 0, 5, 5, 255)
-	display.Show()
+	for {
+		display.Clear()
+		display.SetBrightness(127)
+		display.SetPixel(0, 0, 255)
+		display.Show()
+		time.Sleep(time.Second)
+	}
 }
