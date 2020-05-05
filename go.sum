@@ -4,6 +4,8 @@ github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 h1:DACJavvAHhabrF0
 github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0/go.mod h1:E/TSTwGwJL78qG/PmXZO1EjYhfJinVAhrmmHX6Z8B9k=
 github.com/pbnjay/pixfont v0.0.0-20200125053448-dd9f796fdec0 h1:XO/7RN7i7752VuWejKOcE+G0iG6/zJtqSihMfnkjfGw=
 github.com/pbnjay/pixfont v0.0.0-20200125053448-dd9f796fdec0/go.mod h1:wG8B9TIIBxEYqwgBb9NEs/Gz5/ywV351SGZXRiVJJUA=
+github.com/tomnz/scroll-phat-hd-go v0.1.0 h1:oYHKOv2dtKM3MmurQjPvpAhtv+eQUASAZrSdVZsyfyM=
+github.com/tomnz/scroll-phat-hd-go v0.1.0/go.mod h1:5jsK+6tBuctRJyohugWt1rojiXaxZ8F6ORJYag7Mf4E=
 golang.org/x/image v0.0.0-20200119044424-58c23975cae1 h1:5h3ngYt7+vXCDZCup/HkCQgW5XwmSvR/nA2JmJ0RErg=
 golang.org/x/image v0.0.0-20200119044424-58c23975cae1/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
