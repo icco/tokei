@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
+	scrollphathd "github.com/icco/scroll-phat-hd-go"
 	"github.com/icco/tokei/lib"
-	scrollphathd "github.com/tomnz/scroll-phat-hd-go"
 	"periph.io/x/periph/conn/i2c/i2creg"
 )
 
