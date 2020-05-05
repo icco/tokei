@@ -36,7 +36,7 @@ func main() {
 		display.SetPixel(w, h, 128)
 		display.Show()
 		time.Sleep(time.Second)
-		w = ((w / 60) * width) % width
-		h = height
+    w = ((w / 60) * width) % width
+		h = height-1
 	}
 }
