@@ -9,6 +9,11 @@ import (
 	"periph.io/x/periph/conn/i2c/i2creg"
 )
 
+var (
+	height = 7
+	width  = 17
+)
+
 func main() {
 	if err := lib.HostInit(); err != nil {
 		log.Fatal(err)
@@ -24,17 +29,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	height := 7
-	width := 17
 	h := 0
 	w := 0
 	for {
-		log.Printf("x: %d, y: %d", w, h)
 		display.Clear()
 		display.SetPixel(w, h, 128)
 		display.Show()
 		time.Sleep(time.Second)
 		w = (w + 1) % width
-		h = (h + 1) % height
+		//h = (h + 1) % height
 	}
 }
