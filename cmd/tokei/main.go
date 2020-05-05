@@ -29,14 +29,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	h := 0
+	h := height - 1
 	w := 0
 	for {
 		display.Clear()
 		display.SetPixel(w, h, 128)
 		display.Show()
 		time.Sleep(time.Second)
-    w = ((w / 60) * width) % width
-		h = height-1
+		sec := (time.Now().Second() % 60) / 59.0
+		w = w * sec
 	}
 }
