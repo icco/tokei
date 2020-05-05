@@ -29,7 +29,8 @@ func main() {
 	h := 0
 	w := 0
 	for {
-		//display.Clear()
+		display.Clear()
+		display.SetBrightness(128)
 		display.SetPixel(w, h, 255)
 		display.Show()
 		time.Sleep(time.Second)
