@@ -24,8 +24,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	height := 7
-	width := 17
+	height := 6
+	width := 16
 	h := 0
 	w := 0
 	for {
