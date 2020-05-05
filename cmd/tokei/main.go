@@ -24,11 +24,17 @@ func main() {
 		log.Fatal(err)
 	}
 
+	height := 7
+	width := 17
+	h := 0
+	w := 0
 	for {
 		display.Clear()
 		display.SetBrightness(127)
-		display.SetPixel(0, 0, 255)
+		display.SetPixel(w, h, 255)
 		display.Show()
 		time.Sleep(time.Second)
+		w = (w + 1) % width
+		h = (h + 1) % height
 	}
 }
