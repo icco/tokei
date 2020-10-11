@@ -7,12 +7,12 @@ import (
 	"github.com/robtec/newsapi/api"
 )
 
-func GetNews(cnt int64) ([]string, error) {
+// GetNews uses the NewsAPI to get the latest news.
+func GetNews(apiKey string, cnt int64) ([]string, error) {
 	httpClient := http.Client{}
-	key := "my-api-key"
 	url := "https://newsapi.org"
 
-	client, err := api.New(httpClient, key, url)
+	client, err := api.New(httpClient, apiKey, url)
 	if err != nil {
 		return nil, err
 	}
