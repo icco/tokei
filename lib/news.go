@@ -9,7 +9,7 @@ import (
 
 // GetNews uses the NewsAPI to get the latest news.
 func GetNews(apiKey string, cnt int64) ([]string, error) {
-	httpClient := http.Client{}
+	httpClient := &http.Client{}
 	url := "https://newsapi.org"
 
 	client, err := api.New(httpClient, apiKey, url)

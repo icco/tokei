@@ -4,6 +4,7 @@ import (
 	"image"
 	"image/color"
 	"log"
+	"os"
 
 	"github.com/fogleman/gg"
 	"github.com/icco/tokei/lib"
@@ -63,7 +64,7 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 
 	dc.SetRGB(0, 0, 0)
 	h := fontSize + 10
-	lines, err := lib.GetNews()
+	lines, err := lib.GetNews(os.Getenv("NEWSAPI_KEY"), 3)
 	if err != nil {
 		return nil, err
 	}
