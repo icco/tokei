@@ -72,9 +72,9 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	for i, line := range lines {
 		x := 10.0
 		y := 10.0
-		ax := 10.0
-		ay := 10.0
-		width := 100.0
+		ax := 0.5
+		ay := 0.5
+		width := float64(dc.Width()) - 10.0
 		lineSpacing := 1.0
 
 		dc.DrawStringWrapped(line, x, y, ax, ay, width, lineSpacing, gg.AlignLeft)
