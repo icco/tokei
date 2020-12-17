@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"net/http"
 
+	loghttp "github.com/motemen/go-loghttp"
 	"github.com/robtec/newsapi/api"
 )
 
 // GetNews uses the NewsAPI to get the latest news.
 func GetNews(apiKey string, cnt int64) ([]string, error) {
-	httpClient := &http.Client{}
+	httpClient := &http.Client{
+		Transport: &loghttp.Transport{},
+	}
 	url := "https://newsapi.org"
 
 	client, err := api.New(httpClient, apiKey, url)
@@ -19,9 +22,7 @@ func GetNews(apiKey string, cnt int64) ([]string, error) {
 
 	opts := api.Options{
 		Language: "en",
-		Country:  "us",
-		PageSize: 3,
-		Domains:  "nytimes.com,www.washingtonpost.com",
+		Sources:  "new-york-times,associated-press,the-washington-post",
 	}
 	resp, err := client.TopHeadlines(opts)
 	if err != nil {
@@ -31,7 +32,7 @@ func GetNews(apiKey string, cnt int64) ([]string, error) {
 	var ret []string
 	for i := 0; i < 3; i++ {
 		a := resp.Articles[i]
-		ret = append(ret, fmt.Sprintf("%s - %q", a.PublishedAt, a.Title))
+		ret = append(ret, fmt.Sprintf("%q - %s", a.Title, a.Source.Name))
 	}
 	return ret, nil
 }
