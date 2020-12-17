@@ -30,7 +30,8 @@ func GetNews(apiKey string, cnt int64) ([]string, error) {
 	}
 
 	var ret []string
-	for i := 0; i < 3; i++ {
+	var i int64
+	for ; i < cnt; i++ {
 		a := resp.Articles[i]
 		ret = append(ret, fmt.Sprintf("%q - %s", a.Title, a.Source.Name))
 	}
