@@ -63,13 +63,12 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	}
 
 	dc.SetRGB(0, 0, 0)
-	h := fontSize + 10
 	lines, err := lib.GetNews(os.Getenv("NEWSAPI_KEY"), 1)
 	if err != nil {
 		return nil, err
 	}
 
-	for i, line := range lines {
+	for _, line := range lines {
 		x := 10.0
 		y := 10.0
 		ax := 0.5
