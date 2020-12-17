@@ -9,6 +9,7 @@ require (
 	github.com/motemen/go-loghttp v0.0.0-20170804080138-974ac5ceac27
 	github.com/motemen/go-nuts v0.0.0-20200601065735-3df31f16cb2f // indirect
 	github.com/robtec/newsapi v0.0.0-20180922142248-e986ded8a669
-	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
-	periph.io/x/periph v3.6.4+incompatible
+	github.com/stretchr/testify v1.6.1 // indirect
+	golang.org/x/image v0.0.0-20201208152932-35266b937fa6 // indirect
+	periph.io/x/periph v3.6.5+incompatible
 )
