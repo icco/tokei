@@ -17,14 +17,20 @@ func GetNews(apiKey string, cnt int64) ([]string, error) {
 		return nil, err
 	}
 
-	opts := api.Options{Language: "en", Country: "us"}
+	opts := api.Options{
+		Language: "en",
+		Country:  "us",
+		PageSize: 3,
+		Domains:  "nytimes.com,www.washingtonpost.com",
+	}
 	resp, err := client.TopHeadlines(opts)
 	if err != nil {
 		return nil, err
 	}
 
 	var ret []string
-	for _, a := range resp.Articles {
+	for i := 0; i < 3; i++ {
+		a := resp.Articles[i]
 		ret = append(ret, fmt.Sprintf("%s - %q", a.PublishedAt, a.Title))
 	}
 	return ret, nil
