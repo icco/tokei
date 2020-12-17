@@ -57,14 +57,14 @@ func generateImage(r image.Rectangle) (image.Image, error) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 
-	fontSize := 40
+	fontSize := 24
 	if err := dc.LoadFontFace("Roboto-Black.ttf", float64(fontSize)); err != nil {
 		return nil, err
 	}
 
 	dc.SetRGB(0, 0, 0)
 	h := fontSize + 10
-	lines, err := lib.GetNews(os.Getenv("NEWSAPI_KEY"), 3)
+	lines, err := lib.GetNews(os.Getenv("NEWSAPI_KEY"), 1)
 	if err != nil {
 		return nil, err
 	}
